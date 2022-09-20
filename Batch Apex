@@ -1,0 +1,26 @@
+public class BatchApexClass implements Database.Batchable<sObject>{
+    // start
+    public Database.QueryLocator start(Database.BatchableContext BC){
+        return Database.getQueryLocator('Select Id , Name FROM Account');
+        
+    }
+    
+    //execute
+    public void execute(Database.BatchableContext BC, List<Account> acList){
+        for(Account ac:acList){
+            ac.Active__c = 'Yes';
+        }
+        update acList;
+    }
+    
+    //finish
+    public void finish(Database.BatchableContext BC){
+        
+    }
+    
+}
+
+/*Anonymous Window
+
+BatchApexClass objA= new BatchApexClass();
+Database.executeBatch(objA);*/
